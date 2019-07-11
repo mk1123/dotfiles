@@ -1,0 +1,11 @@
+snippet mm "Math" wA
+$${1:${VISUAL}}$`!p
+punctuation = t[2] and t[2][0] in [',', '.', '?', '-']
+if punctuation:
+	if len(t[2]) == 1:
+		t[2] = t[2] + (' ' if t[2][0] in [',', '.', '?'] else '')
+	snip.rv='' 
+else:
+	snip.rv=' '
+`$2
+endsnippet

@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/mkhattar/summer_cs'
+let g:netrw_dirhist_2='/Users/mkhattar'
+let g:netrw_dirhist_3='/Users'
+let g:netrw_dirhist_4='/Users/mkhattar'
+let g:netrw_dirhist_5='/Users/mkhattar/Dropbox'
+let g:netrw_dirhist_6='/Users/mkhattar'
+let g:netrw_dirhist_7='/Users/mkhattar/.vim'
