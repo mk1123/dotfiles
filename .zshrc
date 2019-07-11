@@ -8,11 +8,11 @@ export ZSH="/Users/mkhattar/.oh-my-zsh"
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# export PATH="/Users/mkhattar/.local/bin:$PATH"
+ #export PATH="/Users/mkhattar/.local/bin:$PATH"
 # Set list of themes to load
  export PATH=//anaconda3/bin:$PATH
 
-export PATH=$PATH:/Users/mkhattar/Applications/SageMath
+#export PATH=$PATH:/Users/mkhattar/Applications/SageMath
 # Setting this variable when ZSH_THEME=random
 # cause zsh load theme from this variable instead of
 # looking in ~/.oh-my-zsh/themes/
