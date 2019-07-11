@@ -49,11 +49,11 @@ nnoremap ^ <nop>
 nnoremap gB `[v`]
 " }}}
 " Fixing ag.vim {{{
-let g:ackprg = 'ag --vimgrep --smart-case'                                                   
-cnoreabbrev ag Ack                                                                           
-cnoreabbrev aG Ack                                                                           
-cnoreabbrev Ag Ack                                                                           
-cnoreabbrev AG Ack 
+let g:ackprg = 'ag --vimgrep --smart-case'
+cnoreabbrev ag Ack
+cnoreabbrev aG Ack
+cnoreabbrev Ag Ack
+cnoreabbrev AG Ack
 " }}}
 " Leader Shortcuts {{{
 let mapleader=","
@@ -64,7 +64,7 @@ nnoremap <leader>sv :so $MYVIMRC<CR>
 nnoremap <leader>s :mksession<CR>
 nnoremap <leader>a :Ag
 nnoremap <leader>1 :set number!<CR>
-nnoremap <leader>l :call <SID>ToggleNumber()<CR>
+"nnoremap <leader>l :call <SID>ToggleNumber()<CR>
 nnoremap <leader>j <C-z>
 nnoremap <leader>m :CtrlP<CR>
 nnoremap <silent> <leader>f :FZF<cr>
@@ -82,7 +82,7 @@ nnoremap <silent> <leader>F :FZF ~<cr>
   "let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 "endif
 "set -gx FZF_DEFAULT_COMMAND  'rg --files --no-ignore-vcs --hidden'
-let g:rg_command = "rg --files --no-ignore --follow -g '!{.git,node_modules,Library,env,Movies,Pictures,Applications,Pods}'"
+let g:rg_command = "rg --files --hidden --no-ignore --follow -g '!{.git,node_modules,Library,env,Movies,Pictures,Applications,Pods}'"
 "command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 "
 " }}}
@@ -129,19 +129,29 @@ set writebackup
 " }}}
 " Vim Plug {{{
 call plug#begin('~/.vim/plugged')
+Plug 'sheerun/vim-polyglot'
+Plug 'gorkunov/smartpairs.vim'
+Plug 'luochen1990/rainbow'
+Plug 'wellle/targets.vim'
+Plug 'andymass/vim-matchup'
+Plug 'junegunn/vim-slash'
+Plug 'jiangmiao/auto-pairs'
+Plug 'lervag/vimtex'
+Plug 'tpope/vim-surround'
 Plug 'valloric/youcompleteme'
+Plug 'ervandew/supertab'
+Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "Plug 'damage220/vim-finder'
 Plug 'nvie/vim-flake8'
 Plug 'vim-scripts/DeleteTrailingWhitespace'
 Plug 'bling/vim-airline'
-Plug 'derekwyatt/vim-scala'
-Plug 'elixir-editors/vim-elixir'
+"Plug 'derekwyatt/vim-scala'
+"Plug 'elixir-editors/vim-elixir'
 Plug 'fatih/vim-go'
 Plug 'janko-m/vim-test'
-Plug 'keith/swift.vim'
-Plug 'kien/ctrlp.vim'
+"Plug 'keith/swift.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'moll/vim-node'
 Plug 'bling/vim-bufferline'
@@ -199,14 +209,14 @@ endfunc
 
 function! <SID>RunFile()
     let ext = expand("%:e")
-    if(ext == "go") 
+    if(ext == "go")
         :GoRun
     endif
 endfunc
 
 function! <SID>BuildFile()
     let ext = expand("%:e")
-    if(ext == "go") 
+    if(ext == "go")
         :GoBuild
     endif
 endfunc
@@ -222,5 +232,85 @@ let g:gundo_close_on_revert=1
 syntax enable
 set background=dark
 colorscheme gruvbox
+" }}}
+" Japjot's Vimtex, Ultisnips and Supertab stuff {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vimtex
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:tex_flavor = 'latex'
+let g:polyglot_disabled = ['latex']
+
+" Quick fix window displaying errors
+let g:vimtex_quickfix_mode=2
+
+" tex-conceal
+set conceallevel=2
+let g:tex_conceal="abdgm"
+if !exists('g:ycm_semantic_triggers')
+  let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
+
+
+
+"""""""""""""""""""""""""
+" You Complete Me
+"""""""""""""""""""""""""
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+"""""""""""""""""""""""""""""""
+" Ultisnips
+"""""""""""""""""""""""""""""""
+
+"Tell ultisnips to use python version 3.x
+let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips']
+let g:UltiSnipsExpandTrigger = '<tab>'
+"let g:UltiSnipsJumpForwardTrigger = '<Right>'
+let g:UltiSnipsJumpForwardTrigger = '<C-k>'
+"let g:UltiSnipsJumpBackwardTrigger = '<Left>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
+" }}}
+" Miscellaneous {{{
+"nnoremap <CR> :noh<CR><CR>
+let g:rainbow_active = 1
+autocmd BufWritePre * :%s/\s+$//e
+" }}}
+" {{{Autopair stuff
+let g:AutoPairsShortcutJump = "<C-l>"
+let g:AutoPairsFlyMode = 1
+" }}}
+" Syntastic stuff {{{
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+let g:syntastic_auto_loc_list = 2
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_balloons = 0
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_ignore_files = ['\.min\.js$', '\.min\.css$']
+let g:syntastic_loc_list_height = 5
+let g:syntastic_warning_symbol = '✗'
+let g:syntastic_style_error_symbol = '∆'
+let g:syntastic_style_warning_symbol = '∆'
+
+let g:syntastic_html_checkers = []
+let g:syntastic_java_checkers = []
+let g:syntastic_javascript_checkers = []
+let g:syntastic_json_checkers = ['jsonlint']
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_ruby_checkers = ['mri']
+let g:syntastic_sh_checkers = ['shellcheck']
+
+let g:syntastic_python_flake8_args = '--max-line-length=100'
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 " }}}
 " vim:foldmethod=marker:foldlevel=0
