@@ -70,7 +70,6 @@ nnoremap <leader>m :CtrlP<CR>
 nnoremap <silent> <leader>f :FZF<cr>
 nnoremap <silent> <leader>F :FZF ~<cr>
 " }}}
-
 " CtrlP (commented out) {{{
 "let g:ctrlp_match_window = 'bottom,order:ttb'
 "let g:ctrlp_switch_buffer = 0
@@ -151,7 +150,7 @@ Plug 'simnalamburt/vim-mundo'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'dracula/vim', { 'as': 'dracula' }
+"Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'sjl/gundo.vim'
 Plug 'mileszs/ack.vim'
 call plug#end()
@@ -218,6 +217,10 @@ let g:gundo_close_on_revert=1
 " Testing {{{
 :nnoremap <Tab> :bnext<CR>
 :nnoremap <S-Tab> :bprevious<CR>
-" cycle through buffers
+" }}}
+" Colors {{{
+syntax enable
+set background=dark
+colorscheme gruvbox
 " }}}
 " vim:foldmethod=marker:foldlevel=0
