@@ -1,4 +1,5 @@
 " Manan Khattar
+ 
 " Colors {{{
 syntax enable
 set termguicolors
@@ -18,6 +19,7 @@ set autoindent
 " }}}
 " UI Layout {{{
 set number	" show line numbers
+set relativenumber 
 set showcmd 	" show command in bottom bar
 set nocursorline " highlight current line
 set wildmenu
@@ -57,20 +59,20 @@ cnoreabbrev AG Ack
 " }}}
 " Leader Shortcuts {{{
 let mapleader=","
-nnoremap <leader>u :GundoToggle<CR>
-nnoremap <leader>ev :vsp $MYVIMRC<CR>
-nnoremap <leader>ez :vsp ~/.zshrc<CR>
+nnoremap <leader>u :MundoToggle<CR>
+nnoremap <leader>ev :e $MYVIMRC<CR>
+nnoremap <leader>ez :e ~/.zshrc<CR>
 nnoremap <leader>sv :so $MYVIMRC<CR>
 nnoremap <leader>s :mksession<CR>
 nnoremap <leader>a :Ag
-nnoremap <leader>1 :set number!<CR>
-"nnoremap <leader>l :call <SID>ToggleNumber()<CR>
+"nnoremap <leader>1 :set number!<CR>
+nnoremap <leader>1 :call <SID>ToggleNumber()<CR>
 nnoremap <leader>j <C-z>
 nnoremap <leader>m :CtrlP<CR>
 nnoremap <silent> <leader>f :FZF<cr>
 nnoremap <silent> <leader>F :FZF ~<cr>
 " }}}
-" CtrlP (commented out) {{{
+" FZF stuff {{{
 "let g:ctrlp_match_window = 'bottom,order:ttb'
 "let g:ctrlp_switch_buffer = 0
 "let g:ctrlp_working_path_mode = 0
@@ -83,6 +85,18 @@ nnoremap <silent> <leader>F :FZF ~<cr>
 "endif
 "set -gx FZF_DEFAULT_COMMAND  'rg --files --no-ignore-vcs --hidden'
 let g:rg_command = "rg --files --hidden --no-ignore --follow -g '!{.git,node_modules,Library,env,Movies,Pictures,Applications,Pods}'"
+let $FZF_DEFAULT_COMMAND="rg --files --no-ignore --follow -g '!{.git,node_modules,Library,env,Movies,Pictures,Applications,Pods}'"
+"imap <leader>p <plug>(fzf-complete-path)
+function! s:append_dir_with_fzf(line)
+  call fzf#run(fzf#wrap({
+    \ 'options': ['--prompt', a:line.'> '],
+    \ 'source': 'find . -type d',
+    \ 'sink': {line -> feedkeys("\<esc>:".a:line.line, 'n')}}))
+  return ''
+endfunction
+
+cnoremap <expr> <leader>p <sid>append_dir_with_fzf(getcmdline())
+
 "command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 "
 " }}}
@@ -129,11 +143,16 @@ set writebackup
 " }}}
 " Vim Plug {{{
 call plug#begin('~/.vim/plugged')
+Plug 'mhinz/vim-startify'
+Plug 'justinmk/vim-dirvish'
+Plug 'Konfekt/FastFold'
+Plug 'tpope/vim-unimpaired'
 Plug 'sheerun/vim-polyglot'
 Plug 'gorkunov/smartpairs.vim'
 Plug 'luochen1990/rainbow'
 Plug 'wellle/targets.vim'
 Plug 'andymass/vim-matchup'
+Plug 'terryma/vim-smooth-scroll'
 Plug 'junegunn/vim-slash'
 Plug 'jiangmiao/auto-pairs'
 Plug 'lervag/vimtex'
@@ -143,6 +162,7 @@ Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 "Plug 'damage220/vim-finder'
 Plug 'nvie/vim-flake8'
 Plug 'vim-scripts/DeleteTrailingWhitespace'
@@ -221,9 +241,6 @@ function! <SID>BuildFile()
     endif
 endfunc
 " }}}
-" Gundo {{{
-let g:gundo_close_on_revert=1
-" }}}
 " Testing {{{
 :nnoremap <Tab> :bnext<CR>
 :nnoremap <S-Tab> :bprevious<CR>
@@ -232,7 +249,8 @@ let g:gundo_close_on_revert=1
 syntax enable
 set background=dark
 colorscheme gruvbox
-" }}}
+"LuciusLightLowContrast
+"" }}}
 " Japjot's Vimtex, Ultisnips and Supertab stuff {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vimtex
@@ -251,8 +269,7 @@ if !exists('g:ycm_semantic_triggers')
   let g:ycm_semantic_triggers = {}
 endif
 let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
-
-
+let g:vimtex_view_method = 'skim'
 
 """""""""""""""""""""""""
 " You Complete Me
@@ -271,14 +288,30 @@ let g:UltiSnipsUsePythonVersion = 3
 let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips']
 let g:UltiSnipsExpandTrigger = '<tab>'
 "let g:UltiSnipsJumpForwardTrigger = '<Right>'
-let g:UltiSnipsJumpForwardTrigger = '<C-k>'
+let g:UltiSnipsJumpForwardTrigger = '<D-j>'
 "let g:UltiSnipsJumpBackwardTrigger = '<Left>'
-let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<D-k>'
 " }}}
 " Miscellaneous {{{
-"nnoremap <CR> :noh<CR><CR>
+nnoremap <CR> :noh<CR><CR>
+au BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
+:set ma
+:set buftype: " "
 let g:rainbow_active = 1
+if has('python3')
+    let g:gundo_prefer_python3 = 1
+endif
 autocmd BufWritePre * :%s/\s+$//e
+:let maplocalleader = "\\"
+set guioptions=
+autocmd FileType qf 5wincmd_
+set fillchars=fold:\ 
+:set wrap linebreak nolist
+" Relative line numbers in a Dirvish buffer
+autocmd! FileType dirvish setlocal relativenumber
+command! -nargs=* -complete=dir Cd call fzf#run(fzf#wrap(
+  \ {'source': "rg --hidden --files --null -g '!{.git,node_modules,Library,env,Movies,Pictures,Applications,Pods}' | xargs -0 gdirname | uniq",
+  \  'sink': 'cd'}))
 " }}}
 " {{{Autopair stuff
 let g:AutoPairsShortcutJump = "<C-l>"
@@ -288,7 +321,7 @@ let g:AutoPairsFlyMode = 1
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
-let g:syntastic_auto_loc_list = 2
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_balloons = 0
@@ -306,6 +339,8 @@ let g:syntastic_json_checkers = ['jsonlint']
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_ruby_checkers = ['mri']
 let g:syntastic_sh_checkers = ['shellcheck']
+let g:syntastic_tex_checkers = []
+
 
 let g:syntastic_python_flake8_args = '--max-line-length=100'
 "let g:syntastic_always_populate_loc_list = 1
@@ -313,4 +348,11 @@ let g:syntastic_python_flake8_args = '--max-line-length=100'
 "let g:syntastic_check_on_open = 1
 "let g:syntastic_check_on_wq = 0
 " }}}
+" Smooth scroll stuff {{{
+noremap <silent> <D-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <D-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <D-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <D-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+" }}}
+ 
 " vim:foldmethod=marker:foldlevel=0

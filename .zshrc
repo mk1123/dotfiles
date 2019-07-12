@@ -75,6 +75,7 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+bindkey '\e' autosuggest-execute
 
 # User configuration
 
@@ -124,6 +125,14 @@ function jk() {
     git add .
     git commit -a -m "$1"
     git push origin master
+}
+
+function vc() {
+    vim ~/.vimrc
+}
+
+function zc() {
+    vim ~/.zshrc
 }
 #e (commented outxport FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 source ~/.fzf.zsh
