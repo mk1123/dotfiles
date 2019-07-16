@@ -21,7 +21,7 @@ set autoindent
 set number	" show line numbers
 set relativenumber 
 set showcmd 	" show command in bottom bar
-set nocursorline " highlight current line
+"set cursorline " highlight current line
 set wildmenu
 set lazyredraw
 set showmatch 	" highlight matching parenthesis
@@ -143,6 +143,8 @@ set writebackup
 " }}}
 " Vim Plug {{{
 call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-repeat'
+Plug 'easymotion/vim-easymotion'
 Plug 'mhinz/vim-startify'
 Plug 'justinmk/vim-dirvish'
 Plug 'Konfekt/FastFold'
@@ -245,12 +247,6 @@ endfunc
 :nnoremap <Tab> :bnext<CR>
 :nnoremap <S-Tab> :bprevious<CR>
 " }}}
-" Colors {{{
-syntax enable
-set background=dark
-colorscheme gruvbox
-"LuciusLightLowContrast
-"" }}}
 " Japjot's Vimtex, Ultisnips and Supertab stuff {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vimtex
@@ -354,5 +350,13 @@ noremap <silent> <D-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 noremap <silent> <D-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <D-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 " }}}
- 
+" Colors {{{
+syntax enable
+colorscheme gruvbox
+set background=dark
+set cursorline
+" set background=light
+" LuciusLightLowContrast
+"" }}}
+
 " vim:foldmethod=marker:foldlevel=0
