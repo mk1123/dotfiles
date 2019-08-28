@@ -36,7 +36,7 @@ set hlsearch 	" highlight all matches
 set foldmethod=indent	" fold based on indent level
 set foldnestmax=10	" max 10 depth
 set foldenable 		" don't fold files by default on open
-nnoremap <space> za
+nnoremap <leader><space> za
 set foldlevelstart=10 	" start with fold level of 1
 " }}}
 " Line Shortcuts {{{
@@ -143,6 +143,7 @@ set writebackup
 " }}}
 " Vim Plug {{{
 call plug#begin('~/.vim/plugged')
+Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-repeat'
 Plug 'easymotion/vim-easymotion'
 Plug 'mhinz/vim-startify'
@@ -345,10 +346,10 @@ let g:syntastic_python_flake8_args = '--max-line-length=100'
 "let g:syntastic_check_on_wq = 0
 " }}}
 " Smooth scroll stuff {{{
-noremap <silent> <D-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <D-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <D-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <D-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 10, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 10, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 10, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 10, 4)<CR>
 " }}}
 " Colors {{{
 syntax enable
@@ -358,5 +359,24 @@ set cursorline
 " set background=light
 " LuciusLightLowContrast
 "" }}}
+" EasyMotion {{{
+map <space> <Plug>(easymotion-prefix)
+"nmap s <Plug>(easymotion-s2)
+"nmap t <Plug>(easymotion-t2)
+map  <space>f <Plug>(easymotion-bd-f)
+nmap <space>f <Plug>(easymotion-overwin-f)
+map  <space>w <Plug>(easymotion-bd-w)
+nmap <space>w <Plug>(easymotion-overwin-w)
+"map  / <Plug>(easymotion-sn)
+"omap / <Plug>(easymotion-tn)
+"map  n <Plug>(easymotion-next)
+"map  N <Plug>(easymotion-prev)
+"map <space>l <Plug>(easymotion-lineforward)
+"map <space>j <Plug>(easymotion-j)
+"map <space>k <Plug>(easymotion-k)
+"map <space>h <Plug>(easymotion-linebackward)
 
+
+
+" }}}
 " vim:foldmethod=marker:foldlevel=0
