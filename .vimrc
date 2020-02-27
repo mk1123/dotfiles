@@ -147,6 +147,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-repeat'
 Plug 'easymotion/vim-easymotion'
 Plug 'mhinz/vim-startify'
+Plug 'ycm-core/YouCompleteMe', { 'do': './install.py' }
 Plug 'justinmk/vim-dirvish'
 Plug 'Konfekt/FastFold'
 Plug 'tpope/vim-unimpaired'
@@ -157,10 +158,10 @@ Plug 'wellle/targets.vim'
 Plug 'andymass/vim-matchup'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'junegunn/vim-slash'
-Plug 'jiangmiao/auto-pairs'
+"Plug 'jiangmiao/auto-pairs'
 Plug 'lervag/vimtex'
 Plug 'tpope/vim-surround'
-Plug 'valloric/youcompleteme'
+"Plug 'valloric/youcompleteme'
 Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdcommenter'
@@ -255,7 +256,17 @@ endfunc
 
 let g:tex_flavor = 'latex'
 let g:polyglot_disabled = ['latex']
+"let g:vimtex_compiler_latexmk_engines = 'xelatex'
 
+let g:vimtex_compiler_latexmk = { 
+        \ 'executable' : 'latexmk',
+        \ 'options' : [ 
+        \   '-xelatex',
+        \   '-file-line-error',
+        \   '-synctex=1',
+        \   '-interaction=nonstopmode',
+        \ ],
+        \}
 " Quick fix window displaying errors
 let g:vimtex_quickfix_mode=2
 
@@ -309,6 +320,7 @@ autocmd! FileType dirvish setlocal relativenumber
 command! -nargs=* -complete=dir Cd call fzf#run(fzf#wrap(
   \ {'source': "rg --hidden --files --null -g '!{.git,node_modules,Library,env,Movies,Pictures,Applications,Pods}' | xargs -0 gdirname | uniq",
   \  'sink': 'cd'}))
+cd ~/Dropbox
 " }}}
 " {{{Autopair stuff
 let g:AutoPairsShortcutJump = "<C-l>"

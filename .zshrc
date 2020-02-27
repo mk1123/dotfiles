@@ -10,7 +10,7 @@ export ZSH="/Users/mkhattar/.oh-my-zsh"
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
  #export PATH="/Users/mkhattar/.local/bin:$PATH"
 # Set list of themes to load
- export PATH=//anaconda3/bin:$PATH
+export PATH=/Users/mkhattar/anaconda3/bin:$PATH
 export PATH="$PATH:/Users/mkhattar/flutter/bin"
 #export PATH=$PATH:/Users/mkhattar/Applications/SageMath
 # Setting this variable when ZSH_THEME=random
@@ -117,7 +117,7 @@ bindkey "^X^_" redo
 #[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #alias vim 'vim --servername vim'
 
-source "/Users/mkhattar/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+# source "/Users/mkhattar/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
 export TCLLIBPATH="/usr/local/lib"
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 
@@ -142,3 +142,6 @@ export FZF_DEFAULT_OPTS="--height=70% --preview='cat {}' --preview-window=right:
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="rg --hidden --files --null -g '!{.git,node_modules,Library,env,Movies,Pictures,Applications,Pods}' | xargs -0 gdirname | uniq"
 export PATH="/usr/local/opt/libxml2/bin:$PATH"
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+eval $(thefuck --alias)
