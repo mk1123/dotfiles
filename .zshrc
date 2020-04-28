@@ -122,7 +122,7 @@ export TCLLIBPATH="/usr/local/lib"
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 
 function jk() {
-    git add .
+    git add . 
     git commit -a -m "$1"
     git push origin master
 }
