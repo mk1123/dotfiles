@@ -147,7 +147,6 @@ Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-repeat'
 Plug 'easymotion/vim-easymotion'
 Plug 'mhinz/vim-startify'
-Plug 'ycm-core/YouCompleteMe', { 'do': './install.py' }
 Plug 'justinmk/vim-dirvish'
 Plug 'Konfekt/FastFold'
 Plug 'tpope/vim-unimpaired'

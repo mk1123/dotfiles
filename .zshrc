@@ -65,6 +65,7 @@ export PATH="$PATH:/Users/mkhattar/flutter/bin"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  virtualenvwrapper
   git
   zsh-autosuggestions
   npm
@@ -145,3 +146,8 @@ export PATH="/usr/local/opt/libxml2/bin:$PATH"
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval $(thefuck --alias)
+
+# Virtualenvwrapper things
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+source $HOME/anaconda3/bin/virtualenvwrapper.sh
